@@ -4,8 +4,9 @@ require_once "bdd_connect.php";
 
 $password = "azerty";
 $erreurs = [];
+$res=[];
 if (isset($_SESSION['isLogin'])) {
-    $req= "SELECT * FROM ticket";
+    $req = "SELECT ticket.id, categorie.nom, ticket.random_id, ticket.date, ticket.message FROM ticket, categorie WHERE ticket.id_categorie = categorie.id";
     $res= mysqli_query($lien_bdd, $req);
     mysqli_close($lien_bdd);
 }
@@ -54,10 +55,8 @@ if (isset($_SESSION['isLogin'])) {
     <thead>
         <tr>
            <th>id</th>
-           <th>id_categorie</th>
-           <th>id_reponse</th>
+           <th>categorie</th>
            <th>date</th>
-           <th>email</th>
            <th>random_id</th>
            <th>message</th>
         </tr>
@@ -66,7 +65,18 @@ if (isset($_SESSION['isLogin'])) {
         <?php
         if ($res) {
             while ($row=mysqli_fetch_assoc($res)) {
-                
+                //créer les variables du tableau
+
+            $id = $row['id'];
+            $id_categorie =$row['nom'];
+            $date = $row['date'];
+            $message =$row['message'];
+            $random_id = $row['random_id'];
+//echo tr o
+//echo td o
+// echo nom variable (id)
+//echo td f
+//echo tr f
             }
         }
         
