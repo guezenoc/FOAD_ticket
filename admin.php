@@ -4,10 +4,10 @@ require_once "bdd_connect.php";
 
 $password = "azerty";
 $erreurs = [];
-$res=[];
+$req ="SELECT ticket.*, categorie.nom  FROM ticket, categorie WHERE ticket.id_categorie = categorie.id";
+    $res = mysqli_query ($lien_bdd, $req);
 if (isset($_SESSION['isLogin'])) {
-    $req = "SELECT ticket.id, categorie.nom, ticket.random_id, ticket.date, ticket.message FROM ticket, categorie WHERE ticket.id_categorie = categorie.id";
-    $res= mysqli_query($lien_bdd, $req);
+
     mysqli_close($lien_bdd);
 }
 
@@ -50,11 +50,13 @@ if (isset($_POST ["login"])) {
 if (isset($_SESSION['isLogin'])) {
 // affiche que si connecter
     ?>
+    <!-- bouton de deconnexion -->
     <a href="deconnexion.php">deconnexion</a>
     <table>
     <thead>
+    <!-- création d'un tableau qui montre les categories de la base de données -->
         <tr>
-           <th>id</th>
+           
            <th>categorie</th>
            <th>date</th>
            <th>random_id</th>
@@ -67,20 +69,24 @@ if (isset($_SESSION['isLogin'])) {
             while ($row=mysqli_fetch_assoc($res)) {
                 //créer les variables du tableau
 
-            $id = $row['id'];
+            
             $id_categorie =$row['nom'];
             $date = $row['date'];
-            $message =$row['message'];
             $random_id = $row['random_id'];
-//echo tr o
-//echo td o
-// echo nom variable (id)
-//echo td f
-//echo tr f
+            $message =$row['message'];
+
+            ?>
+            <tr>
+               <th><?=$id_categorie?></th>
+               <th><?=$date?></th>
+               <th><?=$random_id?></th>
+               <th><?=$message?></th>
+            </tr>
+    <?php
+                }
             }
-        }
-        
-        ?>
+            
+            ?>
     </body>
     </table>
     <?php

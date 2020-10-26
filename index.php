@@ -33,21 +33,23 @@ $random_number = mt_rand ( 10000000 , 99999999 );
 if (isset($_POST)) {
     if (isset($_POST['search_ticket'])) {
         $input_ticket = htmlspecialchars($_POST['ticket_number']);
-        $requete= "SELECT * FROM ticket where ticket.email = '$input_ticket' OR ticket.random_id = '$input_ticket";  
+        $requete= "SELECT * FROM ticket where ticket.email = '$input_ticket' OR ticket.random_id = '$input_ticket'";  
         $resultat = mysqli_query($lien_bdd, $requete);
         
         
         mysqli_close($lien_bdd);
-            if ($resultat) {
-            echo "gg";
-            die;
+        if ($resultat) {
+            while ($row = mysqli_fetch_assoc($resultat)) {
+                $mail = $row ["email"];
+                $id = $row ["id"];
+                echo "<option value = $id > $mail</option>";
+            }
+        }
+            
         }
     }
 
 
-    
-    
-}
 ?>
 
 <!DOCTYPE html>
@@ -58,11 +60,19 @@ if (isset($_POST)) {
     <title>Document</title>
 </head>
 <body>
+
     <form method= "POST" action="index.php">
     <input type = "text" name = "ticket_number" placeholder ="ticket_number_ou email">
     <button type="submit" name ="search_ticket">rechercher </button>
     </form>
     <a href="create_ticket.php">create_ticket</a>
+
+    </br>
+
+    <a href="recuperation_ticket.php">recuperation de votre ticket</a>
+    
+    </br>
+    <a href="messages.php">Répondre à un message</a>
     
 </body>
 </html>

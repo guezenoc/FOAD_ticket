@@ -22,6 +22,9 @@ if (isset($_POST)) {
 
     }
 }   
+
+//Affichage de son ticket grace a son email:
+
 ?>
 
 <form method = "POST" action="create_ticket.php">
@@ -39,4 +42,4 @@ if (isset($_POST)) {
     </select>
     <input type="text" name="message" placeholder ="message">
     <button type="submit"name ="create_ticket">create ticket</button>
-</form>
+
